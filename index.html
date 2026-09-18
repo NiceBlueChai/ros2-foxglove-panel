@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROS 2 控制面板 · Foxglove Bridge</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="dot" id="statusDot"></span>
+          <strong>ROS 2 控制面板</strong>
+          <span class="status-text" id="statusText">未连接</span>
+        </div>
+        <div class="conn">
+          <input id="urlInput" type="text" spellcheck="false" placeholder="ws://192.168.16.179:8765" />
+          <button id="connectBtn" class="primary">连接</button>
+          <button id="disconnectBtn" class="ghost" disabled>断开</button>
+        </div>
+      </header>
+
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="topics">话题 <span class="cnt" id="cntTopics">0</span></button>
+        <button class="tab" data-tab="services">服务 <span class="cnt" id="cntServices">0</span></button>
+        <button class="tab" data-tab="params">参数</button>
+        <button class="tab" data-tab="actions">动作 <span class="cnt" id="cntActions">0</span></button>
+        <button class="tab" data-tab="tf">TF 帧树</button>
+      </div>
+
+      <main class="layout">
+        <!-- 左：列表 -->
+        <aside class="panel sidebar">
+          <div class="list-toolbar">
+            <input class="filter" id="filter" type="text" placeholder="筛选…" spellcheck="false" />
+            <button class="ghost sm" id="groupToggle" title="按命名空间第一层分组">分组</button>
+          </div>
+          <div class="list" id="list"><p class="empty">连接后加载</p></div>
+        </aside>
+
+        <!-- 右：详情 -->
+        <section class="viewer">
+          <div class="panel chart-panel" id="chartPanel">
+            <div class="panel-head">
+              <h2>数值视图</h2>
+              <span class="hint" id="chartHint">自动识别 joint_pos / tcp_pos 等数组字段</span>
+            </div>
+            <div class="chart-wrap">
+              <svg id="chart" viewBox="0 0 680 180" preserveAspectRatio="xMinYMin meet"></svg>
+            </div>
+          </div>
+
+          <div class="panel main-panel">
+            <div class="panel-head">
+              <h2 id="viewTitle">详情</h2>
+              <div class="actions" id="viewActions"></div>
+            </div>
+            <div class="meta" id="meta">从左侧选一项开始</div>
+            <div class="content" id="content">
+              <p class="empty">选择左侧列表项以查看数据</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
